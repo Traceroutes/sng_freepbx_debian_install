@@ -95,7 +95,7 @@ while [[ $# -gt 0 ]]; do
 			opensourceonly=true
 			shift # past argument
 			;;
-		--traceroutes
+		--traceroutes)
 			traceroutes=true
 			shift # past argument
 			;;
