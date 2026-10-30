@@ -95,6 +95,10 @@ while [[ $# -gt 0 ]]; do
 			opensourceonly=true
 			shift # past argument
 			;;
+		--traceroutesremoveunused
+			traceroutesremoveunused=true
+			shift # past argument
+			;;
 		--noaac)
 			noaac=true
 			shift # past argument
@@ -1293,6 +1297,23 @@ else
     fwconsole ma list | awk '/Commercial/ {print $2}' | xargs -t -I {} fwconsole ma -f remove {} >> "$log"
     # Remove firewall module also because it depends on commercial sysadmin module
     fwconsole ma -f remove firewall >> "$log" || true
+  fi
+
+  # If being run with the Traceroutes parameter, remove the packages we don't want and set things up our way.
+  if [ "$traceroutes" ]; then
+    setCurrentStep "Removing Traceroutes unused modules"
+    fwconsole ma delete oracle_connector pms adv_recovery areminder broadcast callaccounting callerid calllimit cdrpro conferencespro cos faxpro pagingpro parkpro pbxmfa pinsetspro queuestats qxact_reports recording_report sangomaconnect sangomartapi restapps sangomacrm scribe sipstation voipinnovations smsplus sms vmnotify voicemail_report vqplus webcallback webrtc ucp >> "$log"
+	setCurrentStep "Enabling extra repos and adding Extension Settings module"
+	fwconsole ma enablerepo extended commercial unsupported
+	fwconsole ma install extensionsettings
+	setCurrentStep "Adding dpvis module"
+	fwconsole ma downloadinstall https://github.com/madgen78/dpviz/archive/refs/heads/main.zip
+	setCurrentStep "Configuring Advanced Options"
+	fwconsole setting DIAL_OPTIONS "rL(10800000:300000:60000)"
+	fwconsole setting TRUNK_OPTIONS "L(10800000:300000:60000)"
+	fwconsole setting RSSFEEDS ""
+	fwconsole setting SERVERINTITLE 1
+	fwconsole setting EXTENSION_LIST_RINGGROUPS 1
   fi
 
   if [ "$dahdi" ]; then
