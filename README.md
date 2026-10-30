@@ -13,7 +13,7 @@ Your Open Source Asterisk PBX GUI Solution
 
 [FreePBX](http://www.freepbx.org/ "FreePBX Home Page") is an open source GUI (graphical user interface) that controls and manages [Asterisk©](http://www.asterisk.org/ "Asterisk Home Page") (PBX). FreePBX is licensed under GPL.
 
-This is a FreePBX 17 installation script.
+This is a FreePBX 17 installation script, customized by Traceroutes for their own internal use.  You probably don't want to use this unless you work for or think like us.  The original is here: https://github.com/FreePBX/sng_freepbx_debian_install
 
 This script is to install FreePBX  on the top of vanilla Debian 12.x OS.
 
@@ -44,7 +44,7 @@ Steps -
 2) Download the file using `wget`:
 
 ```bash
-wget https://github.com/FreePBX/sng_freepbx_debian_install/raw/master/sng_freepbx_debian_install.sh -O /tmp/sng_freepbx_debian_install.sh
+wget https://github.com/Traceroutes/sng_freepbx_debian_install/raw/master/sng_freepbx_debian_install.sh -O /tmp/sng_freepbx_debian_install.sh
 ```
 
 3) Execute the script:
