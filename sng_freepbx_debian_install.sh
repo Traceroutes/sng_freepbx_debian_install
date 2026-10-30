@@ -95,8 +95,8 @@ while [[ $# -gt 0 ]]; do
 			opensourceonly=true
 			shift # past argument
 			;;
-		--traceroutesremoveunused
-			traceroutesremoveunused=true
+		--traceroutes
+			traceroutes=true
 			shift # past argument
 			;;
 		--noaac)
