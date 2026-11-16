@@ -1302,7 +1302,7 @@ else
   # If being run with the Traceroutes parameter, remove the packages we don't want and set things up our way.
   if [ "$traceroutes" ]; then
     setCurrentStep "Removing Traceroutes unused modules"
-    fwconsole ma delete oracle_connector pms adv_recovery areminder broadcast callaccounting callerid calllimit cdrpro conferencespro cos faxpro pagingpro parkpro pbxmfa pinsetspro queuestats qxact_reports recording_report sangomaconnect sangomartapi restapps sangomacrm scribe sipstation voipinnovations smsplus sms vmnotify voicemail_report vqplus webcallback webrtc ucp >> "$log"
+    fwconsole ma delete oracle_connector pms adv_recovery areminder broadcast callaccounting callerid calllimit cdrpro conferencespro cos faxpro pagingpro parkpro pbxmfa pbxsaml pinsetspro queuestats qxact_reports recording_report sangomaconnect sangomartapi restapps sangomacrm scribe sipstation voipinnovations smsplus sms vmnotify voicemail_report vqplus webcallback webrtc ucp >> "$log"
 	setCurrentStep "Enabling extra repos and adding Extension Settings module"
 	fwconsole ma enablerepo extended commercial unsupported
 	fwconsole ma install extensionsettings
