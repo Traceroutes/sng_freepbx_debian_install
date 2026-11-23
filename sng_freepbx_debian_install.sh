@@ -1302,9 +1302,6 @@ else
   # If being run with the Traceroutes parameter, remove the packages we don't want and set things up our way.
   if [ "$traceroutes" ]; then
     setCurrentStep "Removing Traceroutes unused modules"
-	# Disable exiting on error to handle reruns after failures where some modules may have been removed already
-	# TODO: There's probably some better way to do this
-	set +e
 	TRUNUSEDMODS=("oracle_connector"
 		"pms"
 		"adv_recovery"
@@ -1342,15 +1339,18 @@ else
 		"ucp"
 	)
 	for i in "${!TRUNUSEDMODS[@]}"; do
-		fwconsole ma delete "${TRUNUSEDMODS[$i]}" >> "$log"
+		setCurrentStep "Removing module ${TRUNUSEDMODS[$i]}"
+        if ! fwconsole ma delete "${TRUNUSEDMODS[$i]}" &> /dev/null; then
+            message "Removing module ${TRUNUSEDMODS[$i]} failed (perhaps not present?)"
+		else
+			message "Module ${TRUNUSEDMODS[$i]} removed"
+        fi
 	done
 	setCurrentStep "Enabling extra repos and adding Extension Settings module"
 	fwconsole ma enablerepo extended commercial unsupported
 	fwconsole ma install extensionsettings
 	setCurrentStep "Adding dpvis module"
 	fwconsole ma downloadinstall https://github.com/madgen78/dpviz/archive/refs/heads/main.zip
-	# Done installing modules, re-enabling dying on error
-	set -e
 	setCurrentStep "Configuring Advanced Options"
 	fwconsole setting DIAL_OPTIONS "rL(10800000:300000:60000)"
 	fwconsole setting TRUNK_OPTIONS "L(10800000:300000:60000)"
